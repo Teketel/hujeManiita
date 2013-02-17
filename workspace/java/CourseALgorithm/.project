@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>CourseALgorithm</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>algorism_assignment</name>
+			<type>2</type>
+			<location>/media/tekes/248A0E588A0E2740/Users/Tsega/Documents/Eclipse/workspace/java/algorism_assignment</location>
+		</link>
+	</linkedResources>
+</projectDescription>

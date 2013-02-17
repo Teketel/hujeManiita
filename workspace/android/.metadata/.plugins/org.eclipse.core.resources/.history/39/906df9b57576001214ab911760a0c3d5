@@ -1,0 +1,5 @@
+package com.tsegaab.testme;
+import com.google.android.gcm.GCMBaseIntentService;
+public class GCMIntentService extends GCMBaseIntentService{
+
+}

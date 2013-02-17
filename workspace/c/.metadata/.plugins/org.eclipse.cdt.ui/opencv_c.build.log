@@ -1,0 +1,62 @@
+
+**** Build of configuration Debug for project opencv_c ****
+
+make all 
+Building file: ../src/detect.c
+Invoking: GCC C Compiler
+gcc -I/usr/local/include/opencv -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/detect.d" -MT"src/detect.d" -o "src/detect.o" "../src/detect.c"
+../src/detect.c:40:6: warning: return type of ‘main’ is not ‘int’ [-Wmain]
+../src/detect.c: In function ‘runDetection’:
+../src/detect.c:120:17: warning: unused variable ‘timeinfo’ [-Wunused-variable]
+Finished building: ../src/detect.c
+ 
+Building target: opencv_c
+Invoking: GCC C Linker
+gcc -L/usr/local/lib -o "opencv_c"  ./src/checker.o ./src/detect.o ./src/detector.o ./src/opencv_c.o ./src/record.o ./src/recorder.o ./src/s_main.o ./src/s_stream.o ./src/stream_client.o ./src/stream_server.o   -lopencv_highgui -lopencv_imgproc -lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_contrib -lopencv_legacy -lopencv_flann -lopencv_core
+./src/detect.o: In function `main':
+/home/tekes/workspace/c/opencv_c/Debug/../src/detect.c:40: multiple definition of `main'
+./src/checker.o:/home/tekes/workspace/c/opencv_c/Debug/../src/checker.c:14: first defined here
+./src/detector.o: In function `cvRound':
+/usr/local/include/opencv2/core/types_c.h:306: multiple definition of `currentSurface'
+./src/detect.o:/usr/local/include/opencv2/core/types_c.h:306: first defined here
+./src/detector.o:(.data+0x0): multiple definition of `surface'
+./src/detect.o:(.data+0x0): first defined here
+./src/detector.o:(.data+0x4): multiple definition of `threshold'
+./src/detect.o:(.data+0x4): first defined here
+./src/detector.o: In function `main':
+/home/tekes/workspace/c/opencv_c/Debug/../src/detector.c:24: multiple definition of `main'
+./src/checker.o:/home/tekes/workspace/c/opencv_c/Debug/../src/checker.c:14: first defined here
+./src/detector.o: In function `runDetection':
+/home/tekes/workspace/c/opencv_c/Debug/../src/detector.c:96: multiple definition of `runDetection'
+./src/detect.o:/home/tekes/workspace/c/opencv_c/Debug/../src/detect.c:96: first defined here
+./src/detector.o: In function `processImage':
+/home/tekes/workspace/c/opencv_c/Debug/../src/detector.c:62: multiple definition of `processImage'
+./src/detect.o:/home/tekes/workspace/c/opencv_c/Debug/../src/detect.c:159: first defined here
+./src/detector.o: In function `somethingIsMoving':
+/home/tekes/workspace/c/opencv_c/Debug/../src/detector.c:72: multiple definition of `somethingIsMoving'
+./src/detect.o:/home/tekes/workspace/c/opencv_c/Debug/../src/detect.c:138: first defined here
+./src/detector.o: In function `onChange':
+/home/tekes/workspace/c/opencv_c/Debug/../src/detector.c:93: multiple definition of `onChange'
+./src/detect.o:/home/tekes/workspace/c/opencv_c/Debug/../src/detect.c:169: first defined here
+./src/recorder.o: In function `main':
+/home/tekes/workspace/c/opencv_c/Debug/../src/recorder.c:9: multiple definition of `main'
+./src/checker.o:/home/tekes/workspace/c/opencv_c/Debug/../src/checker.c:14: first defined here
+./src/s_main.o: In function `main':
+/home/tekes/workspace/c/opencv_c/Debug/../src/s_main.c:13: multiple definition of `main'
+./src/checker.o:/home/tekes/workspace/c/opencv_c/Debug/../src/checker.c:14: first defined here
+./src/stream_client.o: In function `main':
+/home/tekes/workspace/c/opencv_c/Debug/../src/stream_client.c:22: multiple definition of `main'
+./src/checker.o:/home/tekes/workspace/c/opencv_c/Debug/../src/checker.c:14: first defined here
+./src/stream_server.o: In function `cvRound':
+/usr/local/include/opencv2/core/types_c.h:306: multiple definition of `is_data_ready'
+./src/stream_client.o:/usr/local/include/opencv2/core/types_c.h:306: first defined here
+./src/stream_server.o: In function `_mm_set_sd':
+/usr/local/include/opencv2/core/types_c.h:308: multiple definition of `mutex'
+./src/stream_client.o:/usr/local/include/opencv2/core/types_c.h:308: first defined here
+./src/stream_server.o: In function `main':
+/home/tekes/workspace/c/opencv_c/Debug/../src/stream_server.c:26: multiple definition of `main'
+./src/checker.o:/home/tekes/workspace/c/opencv_c/Debug/../src/checker.c:14: first defined here
+collect2: error: ld returned 1 exit status
+make: *** [opencv_c] Error 1
+
+**** Build Finished ****

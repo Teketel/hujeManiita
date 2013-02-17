@@ -1,0 +1,6 @@
+package com.tsegaab.testme;
+
+
+public final class CommonUtilitys {
+static final String SENDER_ID = "987765716293";
+}

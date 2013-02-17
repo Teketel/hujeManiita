@@ -1,0 +1,10 @@
+package com.sagar.gcma;
+
+public class ConnectionD {
+
+	public boolean isConnectingToInternet() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

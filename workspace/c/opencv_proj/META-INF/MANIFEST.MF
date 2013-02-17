@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: opencv_proj
+Bundle-SymbolicName: opencv_proj
+Bundle-Version: 1.0.0.qualifier

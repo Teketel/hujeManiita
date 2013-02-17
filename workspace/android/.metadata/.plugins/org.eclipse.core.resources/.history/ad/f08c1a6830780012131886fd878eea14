@@ -1,0 +1,18 @@
+package com.tsegaab.besso;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+public class Camera  extends WebViewClient { 
+	
+    @Override 
+    //show the web page in webview but not in web browser
+    public boolean shouldOverrideUrlLoading(WebView view, String url) { 
+        view.loadUrl (url); 
+        return true;
+
+    }
+}

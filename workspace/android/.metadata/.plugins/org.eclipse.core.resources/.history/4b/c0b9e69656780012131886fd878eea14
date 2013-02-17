@@ -1,0 +1,7 @@
+ <html>  
+ <body>  
+ <h4>WORKING</h4>  
+ <video src="http://10.42.0.91:8510/camera_live.ogg" type="video/ogg" autoplay="autoplay" controls="controls" height="160" width="240" >  
+ </video>  
+ </body>  
+ </html> 

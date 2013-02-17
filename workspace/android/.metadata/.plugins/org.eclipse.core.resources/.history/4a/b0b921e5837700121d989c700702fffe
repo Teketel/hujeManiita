@@ -1,0 +1,10 @@
+package com.sagar.gcma;
+
+import static com.sagar.gcma.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+import static com.sagar.gcma.CommonUtilities.EXTRA_MESSAGE;
+import static com.sagar.gcma.CommonUtilities.SENDER_ID;
+import android.app.Activity;
+
+public class MyActivity extends Activity{
+
+}

@@ -1,0 +1,18 @@
+package com.sagar.gcma;
+
+import static com.sagar.gcma.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+import static com.sagar.gcma.CommonUtilities.EXTRA_MESSAGE;
+import static com.sagar.gcma.CommonUtilities.SENDER_ID;
+import android.app.Activity;
+import android.os.AsyncTask;
+
+public class MyActivity extends Activity{
+
+	TextView lableMsg;
+	AsyncTask<Void, Void, Void> mRegisterTask;
+	AlertManager alert2 = new AlertManager();
+	ConnectionD conn2;
+	
+	public static String name;
+	public static String email;
+}

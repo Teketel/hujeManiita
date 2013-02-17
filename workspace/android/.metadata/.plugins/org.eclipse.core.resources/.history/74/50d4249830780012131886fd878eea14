@@ -1,0 +1,27 @@
+package com.tsegaab.besso;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+public class Camera  extends WebViewClient { 
+	WebView v;
+	
+	w=(WebView)findViewById(R.id.webVideo);
+	w.loadUrl("file:///book.html");
+    w.getSettings().setJavaScriptEnabled(true);
+    w.getSettings().setSaveFormData(true);
+    w.getSettings().setBuiltInZoomControls(true);
+    w.setWebViewClient(this);
+}
+	
+    @Override 
+    //show the web page in webview but not in web browser
+    public boolean shouldOverrideUrlLoading(WebView view, String url) { 
+        view.loadUrl (url); 
+        return true;
+
+    }
+}

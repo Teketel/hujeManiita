@@ -1,0 +1,29 @@
+import java.io.IOException;
+
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.Result;
+import com.google.android.gcm.server.Sender;
+
+public class Server {
+
+	public static void main(String args[]) {
+		Sender sender = new Sender("AIzaXXXXXXXXXXXXXXXXXXXXXXXXX");
+		Message message = new Message.Builder()
+				.collapseKey("1")
+				.timeToLive(3)
+				.delayWhileIdle(true)
+				.addData("message",
+						"this text will be seen in notification bar!!").build();
+
+		Result result = null;
+		try {
+			result = sender.send(message, "device_token", 1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(result.toString());
+
+	}
+
+}

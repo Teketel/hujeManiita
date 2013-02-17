@@ -1,0 +1,32 @@
+package com.tsegaab.besso;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+public class Center extends Activity implements OnClickListener{
+Button lightsControl;
+Button cameraControl;
+Button DoorControl;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.center_activity);
+		lightsControl = (Button) findViewById(R.id.Lights);
+		lightsControl.setOnClickListener(this);
+		cameraControl = (Button) findViewById(R.id.Camera);
+		cameraControl.setOnClickListener(this);
+		DoorControl= (Button) findViewById(R.id.Door);
+		DoorControl.setOnClickListener(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+}

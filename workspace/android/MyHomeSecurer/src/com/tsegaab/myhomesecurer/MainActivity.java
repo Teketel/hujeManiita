@@ -1,0 +1,52 @@
+package com.tsegaab.myhomesecurer;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends Activity {
+	Button butt1, butt2;
+	String  SENDER_ID = "987765716293 ";
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		butt1 = (Button) findViewById(R.id.button1);
+		butt2 = (Button) findViewById(R.id.button2);
+
+		butt1.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent regIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
+				regIntent.putExtra("app", PendingIntent.getBroadcast(v.getContext(), 0, new Intent(), 0));
+				regIntent.putExtra("sender", SENDER_ID);
+				startService(regIntent);
+
+			}
+		});
+
+		butt1.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+				unregIntent.putExtra("app", PendingIntent.getBroadcast(v.getContext(), 0, new Intent(), 0));
+				startService(unregIntent);
+			}
+		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+
+}
