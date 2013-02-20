@@ -52,15 +52,6 @@
         android:text="User Name:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/email"
-        android:layout_marginTop="28dp"
-        android:layout_toRightOf="@+id/textView3"
-        android:text="Continue" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -68,6 +59,34 @@
         android:layout_above="@+id/email"
         android:layout_alignLeft="@+id/email"
         android:text="E-mail:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/email"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/ipTextView"
+        android:layout_marginBottom="42dp"
+        android:text="Continue" />
+
+    <EditText
+        android:id="@+id/ipEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_marginBottom="16dp"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/ipTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/email"
+        android:layout_below="@+id/email"
+        android:text="Server IP:PORT"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

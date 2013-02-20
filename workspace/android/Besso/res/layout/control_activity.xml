@@ -12,14 +12,14 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/userTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Living Room"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/living_room_swch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Switch" />
@@ -35,14 +35,14 @@
         android:layout_height="96dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bed Room"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Switch
-        android:id="@+id/Switch01"
+        android:id="@+id/bed_room_swch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Switch" />
@@ -56,5 +56,18 @@
         android:id="@+id/SurfaceView01"
         android:layout_width="136dp"
         android:layout_height="96dp" />
+
+    <TextView
+        android:id="@+id/ipTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Out Door"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Switch
+        android:id="@+id/out_door_swch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch" />
 
 </LinearLayout>

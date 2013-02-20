@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;opencv_c/src/stream.cpp&apos; to &apos;get_stream_video.cpp&apos;" description="Rename resource &apos;stream.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/stream.cpp" name="get_stream_video.cpp" stamp="1361126346561" updateReferences="true"/>
+</session>

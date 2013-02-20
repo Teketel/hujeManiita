@@ -1,0 +1,7 @@
+
+**** Clean-only build of configuration Release for project server ****
+
+make clean 
+make: *** No rule to make target `clean'.  Stop.
+
+**** Build Finished ****

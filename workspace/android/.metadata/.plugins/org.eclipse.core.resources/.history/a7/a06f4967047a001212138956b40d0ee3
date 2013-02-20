@@ -1,0 +1,8 @@
+ import static com.tsegaab.besso.CommonUtilities.SENDER_ID;
+ <html>  
+ <body>  
+ <h4>WORKING</h4>  
+ <video src="http://10.5.23.149:8510/camera_live.ogg" type="video/ogg" autoplay="autoplay" controls="controls" height="160" width="240" >  
+ </video>  
+ </body>  
+ </html> 

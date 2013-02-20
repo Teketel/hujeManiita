@@ -67,11 +67,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>streamer/streamer.c</name>
-			<type>1</type>
-			<location>/media/tekes/248A0E588A0E2740/AllOsInOne/VB/final project/Home-security/c/streamer.c</location>
-		</link>
-	</linkedResources>
 </projectDescription>

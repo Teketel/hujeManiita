@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.webkit.WebView;
 import android.widget.MediaController;
 import android.widget.VideoView;
+import static com.tsegaab.besso.CommonUtilities.SERVER_URL;;
 
 public class Camera extends Activity {
 WebView w;
@@ -22,8 +23,8 @@ WebView w;
 		
 		
 		 VideoView myVideoView = (VideoView)findViewById(R.id.videoView1);
-		 String httpLiveUrl = "http://10.42.0.91:8510/camera_live.ogg%22%20type=%22video/ogg%22%20autoplay=%22autoplay%22%20controls=%22controls%22%20height=%22160%22%20width=%22240%22";
-		 myVideoView.setVideoURI(Uri.parse(httpLiveUrl));
+		 String httpLiveUrl = SERVER_URL + "/webcam.mjpeg";
+		 myVideoView.setVideoPath(httpLiveUrl);
 		 myVideoView.setMediaController(new MediaController(this));
 		 myVideoView.requestFocus();
 		 myVideoView.start();

@@ -20,14 +20,14 @@ import com.google.android.gcm.GCMRegistrar;
 public class MainActivity extends Activity {
 	// label to display gcm messages
 	TextView lblMessage;
-	
+
 	// Asyntask
 	AsyncTask<Void, Void, Void> mRegisterTask;
 	AlertDialogManager alert = new AlertDialogManager();
-	
+
 	// Connection detector
 	ConnectionDetector cd;
-	
+
 	public static String name;
 	public static String email;
 
@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		cd = new ConnectionDetector(getApplicationContext());
 
 		// Check if Internet present
@@ -47,13 +47,13 @@ public class MainActivity extends Activity {
 			// stop executing code by return
 			return;
 		}
-		
+
 		// Getting name, email from intent
 		Intent i = getIntent();
-		
+
 		name = i.getStringExtra("name");
-		email = i.getStringExtra("email");		
-		
+		email = i.getStringExtra("email");
+
 		// Make sure the device has the proper dependencies.
 		GCMRegistrar.checkDevice(this);
 
@@ -62,23 +62,25 @@ public class MainActivity extends Activity {
 		GCMRegistrar.checkManifest(this);
 
 		lblMessage = (TextView) findViewById(R.id.lblMessage);
-		
+
 		registerReceiver(mHandleMessageReceiver, new IntentFilter(
 				DISPLAY_MESSAGE_ACTION));
-		
+
 		// Get GCM registration id
 		final String regId = GCMRegistrar.getRegistrationId(this);
 
 		// Check if regid already presents
 		if (regId.equals("")) {
-			// Registration is not present, register now with GCM			
+			// Registration is not present, register now with GCM
 			GCMRegistrar.register(this, SENDER_ID);
 		} else {
 			// Device is already registered on GCM
 			if (GCMRegistrar.isRegisteredOnServer(this)) {
-				//ServerUtilities.unregister(this,  regId);
-				// Skips registration.				
-				Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
+				// ServerUtilities.unregister(this, regId);
+				// Skips registration.
+				Toast.makeText(getApplicationContext(),
+						"Already registered with GCM", Toast.LENGTH_LONG)
+						.show();
 			} else {
 				// Try to register again, but not in the UI thread.
 				// It's also necessary to cancel the thread onDestroy(),
@@ -103,7 +105,7 @@ public class MainActivity extends Activity {
 				mRegisterTask.execute(null, null, null);
 			}
 		}
-	}		
+	}
 
 	/**
 	 * Receiving push messages
@@ -111,25 +113,25 @@ public class MainActivity extends Activity {
 	private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
+			String newMessage = intent.getExtras().toString();
 			// Waking up mobile if it is sleeping
 			WakeLocker.acquire(getApplicationContext());
-			
+
 			/**
-			 * Take appropriate action on this message
-			 * depending upon your app requirement
-			 * For now i am just displaying it on the screen
+			 * Take appropriate action on this message depending upon your app
+			 * requirement For now i am just displaying it on the screen
 			 * */
-			
+
 			// Showing received message
-			lblMessage.append(newMessage + "\n");			
-			Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
-			
+			lblMessage.append(newMessage + "\n");
+			Toast.makeText(getApplicationContext(),
+					"New Message: " + newMessage, Toast.LENGTH_LONG).show();
+
 			// Releasing wake lock
 			WakeLocker.release();
 		}
 	};
-	
+
 	@Override
 	protected void onDestroy() {
 		if (mRegisterTask != null) {

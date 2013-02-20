@@ -1,0 +1,82 @@
+package com.tsegaab.besso;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Menu;
+import android.widget.Switch;
+import android.widget.CompoundButton;
+import android.widget.Toast;
+
+public class Control extends Activity implements
+		CompoundButton.OnCheckedChangeListener {
+	Switch livingSw, bedSw, outDoorSw;
+	AsyncTask<Void, Void, Void> mRegisterTask;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.control_activity);
+		livingSw = (Switch) findViewById(R.id.living_room_swch);
+		bedSw = (Switch) findViewById(R.id.bed_room_swch);
+		outDoorSw = (Switch) findViewById(R.id.out_door_swch);
+		livingSw.setOnCheckedChangeListener(this);
+		bedSw.setOnCheckedChangeListener(this);
+		outDoorSw.setOnCheckedChangeListener(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		final Context context = this;
+		final String state = (isChecked ? "on" : "off");
+		// TODO Auto-generated method stub
+		if (buttonView == livingSw) {
+			
+			Toast.makeText(this,"Living room light switch is " + state, Toast.LENGTH_SHORT).show();
+			ServerSide.roomLight(this, "living_room", state);
+		}
+		if (buttonView == bedSw) {
+			//String state = (isChecked ? "on" : "off");
+			Toast.makeText(
+					this,
+					"Bed room light switch is " + state,
+					Toast.LENGTH_SHORT).show();
+			
+			mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+				@Override
+				protected Void doInBackground(Void... params) {
+					// Register on our server
+					// On server creates a new user
+					ServerSide.roomLight(getApplicationContext(), "bed_room", state);
+					return null;
+				}
+
+				@Override
+				protected void onPostExecute(Void result) {
+					mRegisterTask = null;
+				}
+
+			};
+			mRegisterTask.execute(null, null, null);
+			
+		}
+		if (buttonView == outDoorSw) {
+			//String state = (isChecked ? "on" : "off");
+			Toast.makeText(
+					this,
+					"Outdoor light switch is " + state,
+					Toast.LENGTH_SHORT).show();
+			ServerSide.roomLight(getApplicationContext(), "outdoor", state);
+		}
+	}
+}

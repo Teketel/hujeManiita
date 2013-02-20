@@ -1,6 +1,8 @@
 package com.tsegaab.myhouse;
 
 
+import com.androidhive.pushnotifications.R;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

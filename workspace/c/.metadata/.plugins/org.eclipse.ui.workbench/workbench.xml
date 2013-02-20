@@ -36,32 +36,17 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="s_main.c" partName="s_main.c" path="/home/tekes/workspace/c/opencv_c/src/s_main.c" title="s_main.c" tooltip="opencv_c/src/s_main.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/opencv_c/src/s_main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="227" selectionTopPixel="28"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stream_server.c" partName="stream_server.c" path="/home/tekes/teke_git_pros/hujeManiita/workspace/c/opencv_c/src/stream_server.c" title="stream_server.c" tooltip="opencv_c/src/stream_server.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/opencv_c/src/stream_server.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4041" selectionTopPixel="2549"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="detector.c" partName="detector.c" path="/home/tekes/workspace/c/opencv_c/src/detector.c" title="detector.c" tooltip="opencv_c/src/detector.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/opencv_c/src/detector.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="785" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="recorder.c" partName="recorder.c" path="/home/tekes/workspace/c/opencv_c/src/recorder.c" title="recorder.c" tooltip="opencv_c/src/recorder.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/opencv_c/src/recorder.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="95" selectionTopPixel="0"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="detect.c" partName="detect.c" path="/home/tekes/workspace/c/opencv_c/src/detect.c" title="detect.c" tooltip="opencv_c/src/detect.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/opencv_c/src/detect.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3476" selectionTopPixel="2325"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="checker.c" partName="checker.c" path="/home/tekes/workspace/c/opencv_c/src/checker.c" title="checker.c" tooltip="opencv_c/src/checker.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/opencv_c/src/checker.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="44" selectionOffset="362" selectionTopPixel="266"/>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="stream_client.c" partName="stream_client.c" path="/home/tekes/teke_git_pros/hujeManiita/workspace/c/opencv_c/src/stream_client.c" title="stream_client.c" tooltip="opencv_c/src/stream_client.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/opencv_c/src/stream_client.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2750" selectionTopPixel="1717"/>
 </editor>
 </editors>
 <views>
@@ -292,22 +277,12 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/detector.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/detector.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/detect.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/s_main.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/stream.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/get_stream_video.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/stream_server.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/opencv_c/src/stream_client.c"/>
 </editors>
-<item historyLabel="detector.c" index="0">
-<position info="not_deleted" x="2560" y="0"/>
-</item>
-<item historyLabel="detect.c" index="2">
-<position info="not_deleted" x="317" y="0"/>
-</item>
-<item historyLabel="detector.c" index="0">
-<position info="not_deleted" x="1049" y="0"/>
-</item>
-<item historyLabel="detect.c" index="2">
-<position info="not_deleted" x="317" y="0"/>
-</item>
-<item historyLabel="detector.c" index="0">
-<position info="not_deleted" x="583" y="111"/>
-</item>
 <item historyLabel="recorder.c" index="1">
 <position info="not_deleted" x="1053" y="0"/>
 </item>
@@ -440,7 +415,22 @@
 <item historyLabel="detect.c" index="9">
 <position info="not_deleted" x="2962" y="0"/>
 </item>
-<item active="true" historyLabel="detect.c" index="9">
+<item historyLabel="detect.c" index="9">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="s_main.c" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="stream.cpp" index="11">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="get_stream_video.cpp" index="12">
+<position info="not_deleted" x="258" y="0"/>
+</item>
+<item historyLabel="stream_server.c" index="13">
+<position info="not_deleted" x="4041" y="0"/>
+</item>
+<item active="true" historyLabel="stream_client.c" index="14">
 <position info="not_deleted" x="0" y="0"/>
 </item>
 </navigationHistory>
@@ -464,6 +454,15 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stream_client.c" tooltip="opencv_c/src/stream_client.c">
+<persistable path="/opencv_c/src/stream_client.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stream_server.c" tooltip="opencv_c/src/stream_server.c">
+<persistable path="/opencv_c/src/stream_server.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stream.cpp" tooltip="opencv_c/src/stream.cpp">
+<persistable path="/opencv_c/src/stream.cpp"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="Sat Jan 26 2013.wmv" tooltip="opencv_c/src/Sat Jan 26 2013.wmv">
 <persistable path="/opencv_c/src/Sat Jan 26 2013.wmv"/>
 </file>
@@ -482,12 +481,6 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="s_main.c" tooltip="opencv_c/src/s_main.c">
 <persistable path="/opencv_c/src/s_main.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stream_server.c" tooltip="opencv_c/src/stream_server.c">
-<persistable path="/opencv_c/src/stream_server.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stream_client.c" tooltip="opencv_c/src/stream_client.c">
-<persistable path="/opencv_c/src/stream_client.c"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="opencv_c.c" tooltip="opencv_c/src/opencv_c.c">
 <persistable path="/opencv_c/src/opencv_c.c"/>
 </file>
@@ -505,9 +498,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="opencv_cpp.cpp" tooltip="opencv_cpp/src/opencv_cpp.cpp">
 <persistable path="/opencv_cpp/src/opencv_cpp.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="movie_detector.cpp" tooltip="opencv_proj/cpp/movie_detector.cpp">
-<persistable path="/opencv_proj/cpp/movie_detector.cpp"/>
 </file>
 </mruList>
 </workbench>
