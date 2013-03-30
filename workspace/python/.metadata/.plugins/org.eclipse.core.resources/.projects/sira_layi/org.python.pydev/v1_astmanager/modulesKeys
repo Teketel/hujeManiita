@@ -1,0 +1,6 @@
+MODULES_MANAGER_V2
+main.MotionDetector|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/MotionDetector.py
+main.MotionDetectorContours|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/MotionDetectorContours.py
+main.__init__|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/__init__.py
+main.constant_utilities|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/constant_utilities.py
+main.my_gcm|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/my_gcm.py

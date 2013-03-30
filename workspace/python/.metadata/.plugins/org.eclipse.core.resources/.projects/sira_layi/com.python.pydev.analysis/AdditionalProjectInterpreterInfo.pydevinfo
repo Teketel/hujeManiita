@@ -1,0 +1,70 @@
+-- VERSION_3
+-- START DISKCACHE
+/home/tekes/teke_git_pros/hujeManiita/workspace/python/.metadata/.plugins/org.eclipse.core.resources/.projects/sira_layi/com.python.pydev.analysis/v1_indexcache
+.v1_indexcache
+main.my_gcm|0|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/my_gcm.py
+main.constant_utilities|0|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/constant_utilities.py
+main.MotionDetector|0|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/MotionDetector.py
+main.__init__|0|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/__init__.py
+main.MotionDetectorContours|0|/home/tekes/teke_git_pros/hujeManiita/workspace/python/sira_layi/main/MotionDetectorContours.py
+-- END DISKCACHE
+-- START DICTIONARY
+16
+11=MotionDetectorInstantaneous.initRecorder
+1=main.constant_utilities
+15=MotionDetectorAdaptative.onChange
+14=MotionDetectorInstantaneous.run
+10=MotionDetectorAdaptative.somethingHasMoved
+13=MotionDetectorAdaptative.run
+2=main.my_gcm
+5=MotionDetectorInstantaneous
+7=MotionDetectorAdaptative.processImage
+4=main.MotionDetector
+8=MotionDetectorAdaptative.__init__
+9=MotionDetectorInstantaneous.__init__
+12=MotionDetectorAdaptative.initRecorder
+16=MotionDetectorInstantaneous.onChange
+3=main.MotionDetectorContours
+6=MotionDetectorAdaptative
+-- END DICTIONARY
+-- START TREE 1
+9
+api|1|API_KEY!11@
+con|1|conn!19@
+db_|4|DB_NAME!11@DB_HOST!11@DB_PW!11@DB_USER!11@
+dbc|1|dbCursor!19@
+get|1|get_all_reg_id!18@
+mot|2|MotionDetectorAdaptative!25@MotionDetectorInstantaneous!33@
+reg|3|REG_ID2!11@registerWithId!18@REG_ID!11@
+sen|1|sendMessage!18@
+unr|1|unregisterWithId!18@
+-- END TREE
+-- START TREE 2
+26
+__i|2|__init__!5&34@__init__!6&26@
+abs|2|absdiff_frame!7&27@absdiff_frame!8&27@
+ave|1|average_frame!8&27@
+cap|2|capture!9&35@capture!8&27@
+cur|4|currentsurface!10&27@currentsurface!8&27@currentcontours!10&27@currentcontours!8&27@
+det|2|detect!6&27@detect!5&35@
+dor|2|doRecord!8&27@doRecord!9&35@
+fon|4|font!11&35@font!9&35@font!12&27@font!8&27@
+fra|4|frame!9&35@frame2gray!9&35@frame1gray!9&35@frame!8&27@
+gra|1|gray_frame!8&27@
+hei|1|height!9&35@
+ini|2|initRecorder!5&34@initRecorder!6&26@
+isr|4|isRecording!13&27@isRecording!8&27@isRecording!14&35@isRecording!9&35@
+nb_|1|nb_pixels!9&35@
+onc|2|onChange!5&34@onChange!6&26@
+pre|2|previous_frame!7&27@previous_frame!8&27@
+pro|2|processImage!5&34@processImage!6&26@
+res|1|res!9&35@
+run|2|run!5&34@run!6&26@
+sho|2|show!9&35@show!8&27@
+som|2|somethingHasMoved!6&26@somethingHasMoved!5&34@
+sur|1|surface!8&27@
+thr|4|threshold!8&27@threshold!15&27@threshold!9&35@threshold!16&35@
+tri|4|trigger_time!13&27@trigger_time!8&27@trigger_time!14&35@trigger_time!9&35@
+wid|1|width!9&35@
+wri|4|writer!12&27@writer!8&27@writer!11&35@writer!9&35@
+-- END TREE

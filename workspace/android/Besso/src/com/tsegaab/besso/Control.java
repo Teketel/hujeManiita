@@ -14,7 +14,7 @@ public class Control extends Activity implements
 	Switch livingSw, bedSw, outDoorSw;
 	AsyncTask<Void, Void, Void> mRegisterTask;
 	public static String Message;
-
+	public static String STATUS;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

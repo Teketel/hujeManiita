@@ -1,0 +1,61 @@
+package com.tsegaab.besso;
+
+import de.mjpegsample.MjpegView.MjpegInputStream;
+import de.mjpegsample.MjpegView.MjpegView;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebView;
+import android.widget.MediaController;
+import android.widget.VideoView;
+import static com.tsegaab.besso.CommonUtilities.SERVER_URL;;
+
+public class Camera extends Activity {
+
+	private MjpegView mv;
+	AsyncTask<Void, Void, Void> mRegisterTask;
+	
+	public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        
+        //sample public cam
+        final String URL = "http://192.168.1.108:8081/play"; 
+        
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        mv = new MjpegView(this);
+        setContentView(mv);        
+		mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				// Register on our server
+				// On server creates a new user
+				mv.setSource(MjpegInputStream.read(URL));
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				mRegisterTask = null;
+			}
+
+		};
+		mRegisterTask.execute(null, null, null);
+        mv.setDisplayMode(MjpegView.SIZE_BEST_FIT);
+        mv.showFps(true);
+	}
+	
+	public void onPause() {
+		super.onPause();
+		mv.stopPlayback();
+	}
+
+}

@@ -2,6 +2,7 @@ package com.tsegaab.besso;
 
 import static com.tsegaab.besso.CommonUtilities.SERVER_URL;
 import static com.tsegaab.besso.Control.Message;
+import static com.tsegaab.besso.Control.STATUS;
 import static com.tsegaab.besso.CommonUtilities.TAG;
 import static com.tsegaab.besso.CommonUtilities.displayMessage;
 
@@ -118,6 +119,20 @@ public final class ServerSide {
             Log.i(TAG, message);
         }
     }
+    
+    static void getStatus() {
+        Log.i(TAG, "Getting status");
+        String serverUrl = SERVER_URL + "/status";        
+        try {
+            get(serverUrl, null);
+            STATUS = "(Successful)";
+            Log.i(TAG, "Tsegaab " + STATUS);
+        } catch (Exception e) {
+            String message = "Un able to get Status";
+            Message = "(Error: " + e.getMessage() + ") When";
+            Log.i(TAG, message);
+        }
+    }
 
     private static void get(String endpoint, Map<String, String> params)
             throws IOException, ClientProtocolException, Exception{   	
@@ -147,6 +162,7 @@ public final class ServerSide {
                 entity.writeTo(out);
                 out.close();
                 String responseStr = out.toString();
+                STATUS = out.toString();                
                 Log.v(TAG, "GET response = " + responseStr);
             } else {
             	Log.v(TAG, "Errror: handle bad response");

@@ -1,40 +1,54 @@
 package com.tsegaab.besso;
 
-import android.annotation.SuppressLint;
+import com.tsegaab.besso.mjpeg.MjpegInputStream;
+import com.tsegaab.besso.mjpeg.MjpegView;
 import android.app.Activity;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.webkit.WebView;
-import android.widget.MediaController;
-import android.widget.VideoView;
-import static com.tsegaab.besso.CommonUtilities.SERVER_URL;;
+import android.view.Window;
+import android.view.WindowManager;;
 
 public class Camera extends Activity {
-WebView w;
-	@SuppressLint("SetJavaScriptEnabled")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.camera_activity);
-		w=(WebView)findViewById(R.id.webVideo);
-		w.getSettings().setJavaScriptEnabled(true);
-		w.loadUrl("file:///android_asset/client.html");
-		
-		
-		 VideoView myVideoView = (VideoView)findViewById(R.id.videoView1);
-		 String httpLiveUrl = SERVER_URL + "/webcam.mjpeg";
-		 myVideoView.setVideoPath(httpLiveUrl);
-		 myVideoView.setMediaController(new MediaController(this));
-		 myVideoView.requestFocus();
-		 myVideoView.start();
-	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	private MjpegView mv;
+	AsyncTask<Void, Void, Void> mRegisterTask;
+	
+	public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        
+        //sample public cam
+        final String URL = "http://10.5.35.246:8081/play"; 
+        
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        mv = new MjpegView(this);
+        setContentView(mv);        
+		mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				// Register on our server
+				// On server creates a new user
+				mv.setSource(MjpegInputStream.read(URL));
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				mRegisterTask = null;
+			}
+
+		};
+		mRegisterTask.execute(null, null, null);
+        mv.setDisplayMode(MjpegView.SIZE_BEST_FIT);
+        mv.showFps(true);
+	}
+	
+	public void onPause() {
+		super.onPause();
+		mv.stopPlayback();
 	}
 
 }

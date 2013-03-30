@@ -1,0 +1,39 @@
+package com.tsegaab.mymjpeg;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
+import com.tsegaab.mymjepg.MjpegInputStream;
+import com.tsegaab.mymjepg.MjpegView;
+
+
+public class MainActivity extends Activity {
+
+	private MjpegView mv;
+
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
+
+		// sample public cam
+		String URL = "http://webcam5.hrz.tu-darmstadt.de/axis-cgi/mjpg/video.cgi?resolution=320x240";
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		mv = new MjpegView(this);
+		setContentView(mv);
+
+		mv.setSource(MjpegInputStream.read(URL));
+		mv.setDisplayMode(MjpegView.SIZE_BEST_FIT);
+		mv.showFps(true);
+	}
+
+	public void onPause() {
+		super.onPause();
+		mv.stopPlayback();
+	}
+
+}

@@ -13,8 +13,9 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="lblMessage" key="selection"/>
+		<item value="roomLight" key="selection"/>
 		<list key="findhistory">
+			<item value="roomLight"/>
 			<item value="lblMessage"/>
 			<item value="onDestroy"/>
 			<item value="register"/>
@@ -22,7 +23,6 @@
 			<item value="com.androidhive.pushnotifications"/>
 			<item value="com.androidhive.pushnotifications.CommonUtilities"/>
 			<item value="com.sagar.gcma"/>
-			<item value="my_app_package"/>
 		</list>
 		<list key="replacehistory">
 			<item value="com.tsegaab.myhomesecurity"/>
