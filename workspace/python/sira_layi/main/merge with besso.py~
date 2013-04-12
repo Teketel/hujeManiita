@@ -31,6 +31,15 @@ class HandleUnRegister:
         #my_gcm.unregisterWithId(r_id)
         return 
         
+class HandleStatus:
+    def GET(self):
+        
+        print "\n\t**********************************************"
+        print "              In side HandleStatus"
+        print "\t**********************************************"
+        status = s.read()
+        return status
+        
 class HandleSend:
 
     def GET(self):
@@ -76,7 +85,7 @@ class HandleRoomLight:
             set_state = "1"
         elif str(i.set) == "off":
             set_state = "0"
-        print "I: " + str(room_name) + "Room light set to " + str(set_state)
+        print "I: " + str(room_name) + " Room light set to " + str(set_state)
         if (str(room_name)=="living_room" and str(set_state)=="1"):
                 print "liv on"
                 #s.write('1')
@@ -97,7 +106,7 @@ class HandleRoomLight:
                 #s.write('4')
         return "I: Room " + str(room_name) + " light set to " + str(set_state)
  
-urls = ('/register','HandleRegister', '/unregister','HandleUnRegister', '/send','HandleSend', '/room','HandleRoomLight', '/stream','HandleStream', '/door','HandleDoor')
+urls = ('/register','HandleRegister', '/unregister','HandleUnRegister', '/send','HandleSend', '/room','HandleRoomLight', '/stream','HandleStream', '/door','HandleDoor', '/status','HandleStatus')
 app = web.application(urls, globals())
 if __name__ == "__main__":
     app.run()

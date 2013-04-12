@@ -24,16 +24,6 @@
         android:layout_height="wrap_content"
         android:text="Switch" />
 
-    <SeekBar
-        android:id="@+id/SeekBar01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <SurfaceView
-        android:id="@+id/surfaceView1"
-        android:layout_width="136dp"
-        android:layout_height="96dp" />
-
     <TextView
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
@@ -46,16 +36,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Switch" />
-
-    <SeekBar
-        android:id="@+id/seekBar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <SurfaceView
-        android:id="@+id/SurfaceView01"
-        android:layout_width="136dp"
-        android:layout_height="96dp" />
 
     <TextView
         android:id="@+id/ipTextView"

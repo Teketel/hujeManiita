@@ -24,6 +24,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
 
@@ -32,8 +33,8 @@ public final class ServerSide {
 	private static final int MAX_ATTEMPTS = 5;
     private static final int BACKOFF_MILLI_SECONDS = 2000;
     private static final Random random = new Random();
+    AsyncTask<Void, Void, Void> mRegisterTask;
 		
-
     /**
      * Register this account/device pair within the server.
      *
@@ -84,7 +85,7 @@ public final class ServerSide {
         }
         String message = context.getString(R.string.server_register_error,
                 MAX_ATTEMPTS);
-        CommonUtilities.displayMessage(context, message);
+        //CommonUtilities.displayMessage(context, message);
     }
 
     static void unregister(final Context context, final String regId) {
@@ -120,18 +121,33 @@ public final class ServerSide {
         }
     }
     
-    static void getStatus() {
+    static String getStatus() {
         Log.i(TAG, "Getting status");
         String serverUrl = SERVER_URL + "/status";        
         try {
-            get(serverUrl, null);
-            STATUS = "(Successful)";
+        	HttpClient httpClient = new DefaultHttpClient();  
+            Log.v(TAG, "Request GET " + serverUrl);
+            HttpGet httpGet = new HttpGet(serverUrl);
+                HttpResponse response = httpClient.execute(httpGet);
+                StatusLine statusLine = response.getStatusLine();
+                if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+                    HttpEntity entity = response.getEntity();
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    entity.writeTo(out);
+                    out.close();
+                    String responseStr = out.toString();
+                    STATUS = out.toString();                
+                    Log.v(TAG, "GET response = " + responseStr);
+                } else {
+                	Log.v(TAG, "Errror: handle bad response");
+                }
             Log.i(TAG, "Tsegaab " + STATUS);
         } catch (Exception e) {
-            String message = "Un able to get Status";
+            STATUS = "Un able to get Status";
             Message = "(Error: " + e.getMessage() + ") When";
-            Log.i(TAG, message);
+            Log.i(TAG, STATUS);
         }
+        return STATUS;
     }
 
     private static void get(String endpoint, Map<String, String> params)

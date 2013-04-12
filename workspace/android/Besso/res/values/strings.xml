@@ -23,5 +23,10 @@
     <string name="options_unregister">Unregister</string>
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
+    <string name="lefButton">Left</string>
+    <string name="rightButton">Right</string>
+    <string name="leftButton">Left</string>
+    <string name="pw_lable">Password:</string>
+    <string name="sign_up_label">Sign Up</string>
 
 </resources>

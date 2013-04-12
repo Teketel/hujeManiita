@@ -2,11 +2,12 @@ package com.tsegaab.besso;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Switch;
 import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 public class Control extends Activity implements
@@ -15,6 +16,7 @@ public class Control extends Activity implements
 	AsyncTask<Void, Void, Void> mRegisterTask;
 	public static String Message;
 	public static String STATUS;
+	private String[] cStatus;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,6 +27,25 @@ public class Control extends Activity implements
 		livingSw.setOnCheckedChangeListener(this);
 		bedSw.setOnCheckedChangeListener(this);
 		outDoorSw.setOnCheckedChangeListener(this);
+		// get sent current status from center class
+		Intent i = getIntent();
+/*		cStatus = i.getStringArrayExtra("sentStatus");
+		// set status to switch objects
+		if (cStatus[0].equals("1")){
+		livingSw.setActivated(true);
+		} else {
+			livingSw.setActivated(false);
+		}
+		if (cStatus[1].equals("1")){
+			bedSw.setActivated(true);
+			} else {
+				bedSw.setActivated(false);
+			}
+		if (cStatus[2].equals("1")){
+			outDoorSw.setActivated(true);
+			} else {
+				outDoorSw.setActivated(false);
+			}*/
 	}
 
 	@Override

@@ -4,67 +4,60 @@ import com.google.android.gcm.GCMRegistrar;
 import static com.tsegaab.besso.CommonUtilities.DISPLAY_MESSAGE_ACTION;
 import static com.tsegaab.besso.CommonUtilities.EXTRA_MESSAGE;
 import static com.tsegaab.besso.CommonUtilities.SENDER_ID;
+import static com.tsegaab.besso.CommonUtilities.SERVER_URL;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class Center extends Activity implements OnClickListener{
-Button lightsControl;
-Button cameraControl;
-Button DoorControl;
-AsyncTask<Void, Void, Void> mRegisterTask;
-AlertHandler alert = new AlertHandler();
-CheckConnection cd;
+public class Center extends Activity implements OnClickListener {
+	Button lightsControl;
+	Button cameraControl;
+	Button DoorControl;
+	AsyncTask<Void, Void, Void> mRegisterTask;
+	AlertHandler alert = new AlertHandler();
+	CheckConnection cd;
 
-public static String name;
-public static String email;
+	public static String name;
+	public static String passWd;
+	private String[] r_status;
+	private String s = "one,two,three";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.center_activity);
 		
 		cd = new CheckConnection(getApplicationContext());
-
-		// Check if Internet present
-		if (!cd.isConnectingToInternet()) {
-			// Internet Connection is not present
-			alert.showAlertDialog(Center.this,
-					"Internet Connection Error",
-					"Please connect to working Internet connection", false);
-			// stop executing code by return
-			return;
-		}
 		
 		lightsControl = (Button) findViewById(R.id.Lights);
 		lightsControl.setOnClickListener(this);
 		cameraControl = (Button) findViewById(R.id.Camera);
 		cameraControl.setOnClickListener(this);
-		DoorControl= (Button) findViewById(R.id.Door);
+		DoorControl = (Button) findViewById(R.id.Door);
 		DoorControl.setOnClickListener(this);
-		
-		Intent i = getIntent();
 
-		name = i.getStringExtra("name");
-		email = i.getStringExtra("email");
+		//updatePref();
 
 		// Make sure the device has the proper dependencies.
 		GCMRegistrar.checkDevice(this);
-
 		// Make sure the manifest was properly set - comment out this line
 		// while developing the app, then uncomment it when it's ready.
 		GCMRegistrar.checkManifest(this);
-
+		//Register a BroadcastReceiver to be run in the main activity thread. 
 		registerReceiver(mHandleMessageReceiver, new IntentFilter(
 				DISPLAY_MESSAGE_ACTION));
 
@@ -80,9 +73,9 @@ public static String email;
 			if (GCMRegistrar.isRegisteredOnServer(this)) {
 				// ServerUtilities.unregister(this, regId);
 				// Skips registration.
-				Toast.makeText(getApplicationContext(),
-						"Already registered with GCM", Toast.LENGTH_LONG)
-						.show();
+				//Toast.makeText(getApplicationContext(),
+					//	"Already registered with GCM", Toast.LENGTH_LONG)
+						//.show();
 			} else {
 				// Try to register again, but not in the UI thread.
 				// It's also necessary to cancel the thread onDestroy(),
@@ -94,7 +87,8 @@ public static String email;
 					protected Void doInBackground(Void... params) {
 						// Register on our server
 						// On server creates a new user
-						ServerSide.register(context, name, email, regId);
+						ServerSide.register(context, name, passWd, regId);
+						s = ServerSide.getStatus();
 						return null;
 					}
 
@@ -106,7 +100,15 @@ public static String email;
 				};
 				mRegisterTask.execute(null, null, null);
 			}
-		}
+		} 
+		r_status = s.split(",");
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		//updatePref();
 	}
 
 	/**
@@ -144,8 +146,6 @@ public static String email;
 		}
 		super.onDestroy();
 	}
-	
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,24 +155,43 @@ public static String email;
 	}
 
 	@Override
-	public void onClick(View v) {
-		if (v.getId()== R.id.Lights){
-			Intent i = new Intent(getApplicationContext(), Control.class);
-			startActivity(i);
-			finish();
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			startActivity(new Intent(this, MyPreferences.class));
+			return true;
 		}
-		else if (v.getId()== R.id.Camera){
+		return false;
+	}
+
+	@Override
+	public void onClick(View v) {
+		//updatePref();
+		//v.startAnimation(anim);
+		if (v.getId() == R.id.Lights) {
+			Intent i = new Intent(getApplicationContext(), Control.class);
+			i.putExtra("sentStatus", r_status);
+			startActivity(i);
+			// finish();
+		} else if (v.getId() == R.id.Camera) {
 			Intent i = new Intent(getApplicationContext(), Camera.class);
 			startActivity(i);
-			finish();
+			// finish();
 		}
-		/*else if (v.getId()== R.id.Doors){
-			Intent i = new Intent(getApplicationContext(), Control.class);
-			startActivity(i);
-			finish();
-		}
-		*/
-				
+		/*
+		 * else if (v.getId()== R.id.Doors){ Intent i = new
+		 * Intent(getApplicationContext(), Control.class); startActivity(i);
+		 * finish(); }
+		 */
+
+	}
+
+	private void updatePref() {
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		name = pref.getString("userName", "Please set useName");
+		passWd = pref.getString("userPw", "Please ser userPassword");
+		SERVER_URL = pref.getString("serverIP", "Please set serverIP");
 	}
 
 }

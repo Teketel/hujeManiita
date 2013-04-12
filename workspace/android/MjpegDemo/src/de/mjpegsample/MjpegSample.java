@@ -16,7 +16,7 @@ public class MjpegSample extends Activity {
         super.onCreate(icicle);
         
         //sample public cam
-        final String URL = "http://192.168.1.108:8081/play"; 
+        final String URL = "http://10.5.60.154:8081/play"; 
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
