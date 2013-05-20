@@ -41,30 +41,37 @@ public final class R {
         public static final int warning=0x7f02000a;
     }
     public static final class id {
-        public static final int Camera=0x7f0b000b;
-        public static final int Door=0x7f0b000a;
-        public static final int Lights=0x7f0b0009;
-        public static final int action_settings=0x7f0b0011;
-        public static final int bed_room_swch=0x7f0b000f;
+        public static final int Camera=0x7f0b000c;
+        public static final int Door=0x7f0b000b;
+        public static final int Lights=0x7f0b000a;
+        public static final int action_settings=0x7f0b0017;
+        public static final int bed_room_swch=0x7f0b0011;
+        public static final int bedroom_door=0x7f0b0015;
         public static final int button1=0x7f0b0007;
-        public static final int emailTextView=0x7f0b000e;
+        public static final int emailTextView=0x7f0b0010;
         public static final int ipEditText=0x7f0b0006;
         public static final int ipTextView=0x7f0b0005;
-        public static final int living_room_swch=0x7f0b000d;
+        public static final int kids_room_door=0x7f0b0016;
+        public static final int living_room_swch=0x7f0b000f;
+        public static final int main_door=0x7f0b0014;
         public static final int mjpegView1=0x7f0b0008;
-        public static final int out_door_swch=0x7f0b0010;
+        public static final int noConntextView=0x7f0b000d;
+        public static final int noConntextView2=0x7f0b0013;
+        public static final int noConntextView3=0x7f0b0009;
+        public static final int out_door_swch=0x7f0b0012;
         public static final int pw_field=0x7f0b0004;
         public static final int textView1=0x7f0b0000;
         public static final int textView2=0x7f0b0001;
         public static final int textView3=0x7f0b0003;
         public static final int userName=0x7f0b0002;
-        public static final int userTextView=0x7f0b000c;
+        public static final int userTextView=0x7f0b000e;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int camera_activity=0x7f030001;
         public static final int center_activity=0x7f030002;
         public static final int control_activity=0x7f030003;
+        public static final int door_control=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -107,7 +108,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         // Play default notification sound
         notification.defaults |= Notification.DEFAULT_SOUND;
         
-        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
+        notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "alarm.mp3");
         
         // Vibrate if vibrate is enabled
         notification.defaults |= Notification.DEFAULT_VIBRATE;

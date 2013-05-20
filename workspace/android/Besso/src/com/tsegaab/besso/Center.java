@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioRecord.OnRecordPositionUpdateListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Center extends Activity implements OnClickListener {
@@ -29,35 +31,49 @@ public class Center extends Activity implements OnClickListener {
 	Button cameraControl;
 	Button DoorControl;
 	AsyncTask<Void, Void, Void> mRegisterTask;
+	AsyncTask<Void, Void, Void> getStatusTask;
+
 	AlertHandler alert = new AlertHandler();
 	CheckConnection cd;
 
 	public static String name;
 	public static String passWd;
 	private String[] r_status;
-	private String s = "one,two,three";
+	private String s;
+	private TextView noConnection;
+	HomeStatus homeStatus;
+	SharedPreferences pref;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.center_activity);
-		
+		Intent i = getIntent();
+		name = i.getStringExtra("name");
+		passWd = i.getStringExtra("passwd");
+
 		cd = new CheckConnection(getApplicationContext());
-		
+		noConnection = (TextView) findViewById(R.id.noConntextView3);
 		lightsControl = (Button) findViewById(R.id.Lights);
 		lightsControl.setOnClickListener(this);
 		cameraControl = (Button) findViewById(R.id.Camera);
 		cameraControl.setOnClickListener(this);
 		DoorControl = (Button) findViewById(R.id.Door);
 		DoorControl.setOnClickListener(this);
-
-		//updatePref();
-
-		// Make sure the device has the proper dependencies.
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		homeStatus = new HomeStatus(pref);
+		
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			noConnection.setVisibility(1);
+		}
+		noConnection.setVisibility(0);
+		getLightState();
+	
 		GCMRegistrar.checkDevice(this);
-		// Make sure the manifest was properly set - comment out this line
-		// while developing the app, then uncomment it when it's ready.
+	
 		GCMRegistrar.checkManifest(this);
-		//Register a BroadcastReceiver to be run in the main activity thread. 
+	
 		registerReceiver(mHandleMessageReceiver, new IntentFilter(
 				DISPLAY_MESSAGE_ACTION));
 
@@ -71,24 +87,15 @@ public class Center extends Activity implements OnClickListener {
 		} else {
 			// Device is already registered on GCM
 			if (GCMRegistrar.isRegisteredOnServer(this)) {
-				// ServerUtilities.unregister(this, regId);
-				// Skips registration.
-				//Toast.makeText(getApplicationContext(),
-					//	"Already registered with GCM", Toast.LENGTH_LONG)
-						//.show();
+	
 			} else {
-				// Try to register again, but not in the UI thread.
-				// It's also necessary to cancel the thread onDestroy(),
-				// hence the use of AsyncTask instead of a raw thread.
 				final Context context = this;
 				mRegisterTask = new AsyncTask<Void, Void, Void>() {
 
 					@Override
 					protected Void doInBackground(Void... params) {
-						// Register on our server
-						// On server creates a new user
+		
 						ServerSide.register(context, name, passWd, regId);
-						s = ServerSide.getStatus();
 						return null;
 					}
 
@@ -100,31 +107,41 @@ public class Center extends Activity implements OnClickListener {
 				};
 				mRegisterTask.execute(null, null, null);
 			}
-		} 
-		r_status = s.split(",");
+		}
+		// getLightState();
 	}
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		//updatePref();
+
+	private void getLightState() {
+		getStatusTask = new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				s = ServerSide.getStatus(passWd);
+				Log.i("New", s);
+				if ((s == null) || (s.equalsIgnoreCase("Un able to get Status"))) {
+					return null;
+				}
+				homeStatus.update(s.split(","));
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				mRegisterTask = null;
+			}
+
+		};
+		getStatusTask.execute(null, null, null);
+
 	}
 
-	/**
-	 * Receiving push messages
-	 * */
 	private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
 			// Waking up mobile if it is sleeping
 			WakeLocker.acquire(getApplicationContext());
-
-			/**
-			 * Take appropriate action on this message depending upon your app
-			 * requirement For now i am just displaying it on the screen
-			 * */
 			Toast.makeText(getApplicationContext(),
 					"New Message: " + newMessage, Toast.LENGTH_LONG).show();
 
@@ -137,6 +154,9 @@ public class Center extends Activity implements OnClickListener {
 	protected void onDestroy() {
 		if (mRegisterTask != null) {
 			mRegisterTask.cancel(true);
+		}
+		if (getStatusTask != null) {
+			getStatusTask.cancel(true);
 		}
 		try {
 			unregisterReceiver(mHandleMessageReceiver);
@@ -166,8 +186,8 @@ public class Center extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		//updatePref();
-		//v.startAnimation(anim);
+		// updatePref();
+		// v.startAnimation(anim);
 		if (v.getId() == R.id.Lights) {
 			Intent i = new Intent(getApplicationContext(), Control.class);
 			i.putExtra("sentStatus", r_status);
@@ -177,13 +197,18 @@ public class Center extends Activity implements OnClickListener {
 			Intent i = new Intent(getApplicationContext(), Camera.class);
 			startActivity(i);
 			// finish();
+		} else if (v.getId() == R.id.Door) {
+			Intent i = new Intent(getApplicationContext(), DoorControl.class);
+			startActivity(i);
+			// finish();
 		}
-		/*
-		 * else if (v.getId()== R.id.Doors){ Intent i = new
-		 * Intent(getApplicationContext(), Control.class); startActivity(i);
-		 * finish(); }
-		 */
 
+	}
+
+	@Override
+	public void onResume() {
+		// getLightState();
+		super.onResume();
 	}
 
 	private void updatePref() {

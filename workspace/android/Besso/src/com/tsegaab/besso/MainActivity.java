@@ -1,35 +1,42 @@
 package com.tsegaab.besso;
 
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.Menu;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import static com.tsegaab.besso.CommonUtilities.SERVER_URL;
 
 public class MainActivity extends Activity implements OnClickListener {
+	TextToSpeech tts;
 	EditText userEditText, ipEditText;
 	EditText passwdEditText;
 	CheckConnection cd;
 	AlertHandler alert = new AlertHandler();
 	Button continueBtn;
+	SharedPreferences pref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		/*
-		 * if ( !pref.getBoolean("fristTime", true)){ Intent i = new
-		 * Intent(getApplicationContext(), Center.class); startActivity(i);
-		 * finish(); }
-		 */
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+		if(pref.getString("frist_time", "").toString().equalsIgnoreCase("false")) {
+			Intent i = new Intent(getApplicationContext(), Center.class);
+			
+			i.putExtra("name", pref.getString("userName", "defaulName"));
+			i.putExtra("passwd", pref.getString("email", "defaulPW"));
+			startActivity(i);
+			finish();
+		}
+
 		setContentView(R.layout.activity_main);
 		cd = new CheckConnection(getApplicationContext());
 		continueBtn = (Button) findViewById(R.id.button1);
@@ -38,6 +45,19 @@ public class MainActivity extends Activity implements OnClickListener {
 		passwdEditText = (EditText) findViewById(R.id.pw_field);
 		ipEditText = (EditText) findViewById(R.id.ipEditText);
 		ipEditText.setText("10.5.23.149:8080");
+
+		tts = new TextToSpeech(MainActivity.this,
+				new TextToSpeech.OnInitListener() {
+
+					@Override
+					public void onInit(int status) {
+						if (status != TextToSpeech.ERROR) {
+							tts.setLanguage(Locale.US);
+
+						}
+
+					}
+				});
 	}
 
 	@Override
@@ -47,8 +67,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Check if Internet present
 		if (!cd.isConnectingToInternet()) {
 			// Internet Connection is not present
+			tts.speak("Internet Error!, Please connect to a working Network.",
+					TextToSpeech.QUEUE_FLUSH, null);
 			alert.showAlertDialog(MainActivity.this,
-					"Internet Connection Error",
+					"Internet Connection Error!",
 					"Please connect to working Internet connection", false);
 			// stop executing code by return
 			return;
@@ -61,13 +83,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		if (name.trim().length() > 0 && passWd.trim().length() > 0) {
 			Intent i = new Intent(getApplicationContext(), Center.class);
+			i.putExtra("name", name);
+			i.putExtra("passwd", passWd);
 			// Save values to my preference file
-			SharedPreferences pref = PreferenceManager
-					.getDefaultSharedPreferences(this);
 			SharedPreferences.Editor prefEditor = pref.edit();
-			prefEditor.putBoolean("fristTime", false);
 			prefEditor.putString("userName", name);
-			prefEditor.putString("userPw", passWd);
+			prefEditor.putString("email", passWd);
 			prefEditor.putString("serverIP", sIp);
 			prefEditor.commit();
 			startActivity(i);
@@ -77,6 +98,15 @@ public class MainActivity extends Activity implements OnClickListener {
 			alert.showAlertDialog(MainActivity.this, "Registration Error!",
 					"Please enter your details", false);
 		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		if (tts != null) {
+			tts.stop();
+			tts.shutdown();
+		}
+		super.onDestroy();
 	}
 
 }

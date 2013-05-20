@@ -1,0 +1,42 @@
+package com.tsegaab.besso;
+
+import android.content.SharedPreferences;
+import android.util.Log;
+
+public class HomeStatus {
+	
+	private SharedPreferences updatePref;
+	
+	
+	public HomeStatus(SharedPreferences updatePref) {
+		this.updatePref = updatePref;
+	}
+	
+	public void update(String s[]){
+		
+		SharedPreferences.Editor prefEditor = updatePref.edit();
+		Log.i("LIGHT STATE", s[0]+ s[1] + s[2] + s[3]+ s[4] + s[5]);
+		prefEditor.putString("living_light", s[0]);
+		prefEditor.putString("bed_light", s[1]);
+		prefEditor.putString("outdoor_light", s[2]);
+		prefEditor.putString("main_door", s[3]);
+		prefEditor.putString("bedroom_door", s[4]);
+		prefEditor.putString("kids_room_door", s[5]);
+		prefEditor.commit();
+	}
+	
+	public
+	String[] getStatus(){
+		String s[] = {"0", "0", "0", "0", "0", "0"};
+		
+		s[0] = updatePref.getString("living_light", "0");
+		s[1] = updatePref.getString("bed_light", "0");
+		s[2] = updatePref.getString("outdoor_light", "0");
+		s[3] = updatePref.getString("main_door", "0");
+		s[4] = updatePref.getString("bedroom_door", "0");
+		s[5] = updatePref.getString("kids_room_door", "0");
+		
+		return s;
+	}
+ 
+}

@@ -2,6 +2,7 @@ package com.tsegaab.besso;
 
 import static com.tsegaab.besso.CommonUtilities.SERVER_URL;
 import static com.tsegaab.besso.Control.Message;
+import static com.tsegaab.besso.DoorControl.Message2;
 import static com.tsegaab.besso.Control.STATUS;
 import static com.tsegaab.besso.CommonUtilities.TAG;
 import static com.tsegaab.besso.CommonUtilities.displayMessage;
@@ -33,15 +34,16 @@ public final class ServerSide {
 	private static final int MAX_ATTEMPTS = 5;
     private static final int BACKOFF_MILLI_SECONDS = 2000;
     private static final Random random = new Random();
-    AsyncTask<Void, Void, Void> mRegisterTask;
-		
+    private AsyncTask<Void, Void, Void> mRegisterTask;
+    private static String homeStatus;
+    
     /**
      * Register this account/device pair within the server.
      *
      */
     static void register(final Context context, String name, String email, final String regId) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
-        String serverUrl = SERVER_URL+ "/register?";;
+        String serverUrl = SERVER_URL+ "/register?";
         Map<String, String> params = new HashMap<String, String>();
         params.put("r_id", regId);
         params.put("name", name);
@@ -104,12 +106,13 @@ public final class ServerSide {
             CommonUtilities.displayMessage(context, message);
         }
     }
-    static void roomLight(final Context context, final String roomName, final String state) {
+    static void roomLight(final Context context, final String roomName, final String state, final String email) {
         Log.i(TAG, "Changing room "+roomName+" to "+state);
         String serverUrl = SERVER_URL + "/room?";
         Map<String, String> params = new HashMap<String, String>();
         params.put("room", roomName);
         params.put("set", state);
+        params.put("email", email);
         try {
             get(serverUrl, params);
             Message = "(Successful)";
@@ -121,9 +124,46 @@ public final class ServerSide {
         }
     }
     
-    static String getStatus() {
+    static void streamer(final Context context, final String roomName, final String state, final String email) {
+        Log.i(TAG, "Changing room "+roomName+" to "+state);
+        String serverUrl = SERVER_URL + "/stream?";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("room", roomName);
+        params.put("code", state);
+        params.put("email", email);
+        try {
+            get(serverUrl, params);
+            Message = "(Successful)";
+        } catch (Exception e) {
+            String message = context.getString(R.string.server_unregister_error,
+                    e.getMessage());
+            Message = "(Error: " + e.getMessage() + ") When";
+            Log.i(TAG, message);
+        }
+    }
+    
+    
+    static void doorLock(final Context context, final String doorName, final String state, final String email) {
+        Log.i(TAG, "Changing Door "+ doorName+" to "+state);
+        String serverUrl = SERVER_URL + "/door?";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("name", doorName);
+        params.put("set", state);
+        params.put("email", email);
+        try {
+            get(serverUrl, params);
+            Message2 = "(Successful)";
+        } catch (Exception e) {
+            String message = context.getString(R.string.server_unregister_error,
+                    e.getMessage());
+            Message2 = "(Error: " + e.getMessage() + ") When";
+            Log.i(TAG, message);
+        }
+    }
+    
+    static String getStatus(String email) {
         Log.i(TAG, "Getting status");
-        String serverUrl = SERVER_URL + "/status";        
+        String serverUrl = SERVER_URL + "/status?email=" + email;        
         try {
         	HttpClient httpClient = new DefaultHttpClient();  
             Log.v(TAG, "Request GET " + serverUrl);
@@ -136,18 +176,18 @@ public final class ServerSide {
                     entity.writeTo(out);
                     out.close();
                     String responseStr = out.toString();
-                    STATUS = out.toString();                
+                    homeStatus = out.toString();                
                     Log.v(TAG, "GET response = " + responseStr);
                 } else {
                 	Log.v(TAG, "Errror: handle bad response");
                 }
-            Log.i(TAG, "Tsegaab " + STATUS);
+            Log.i(TAG, "Tsegaab " + homeStatus);
         } catch (Exception e) {
-            STATUS = "Un able to get Status";
+            homeStatus = "Un able to get Status";
             Message = "(Error: " + e.getMessage() + ") When";
-            Log.i(TAG, STATUS);
+            Log.i(TAG, homeStatus);
         }
-        return STATUS;
+        return homeStatus;
     }
 
     private static void get(String endpoint, Map<String, String> params)

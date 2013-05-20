@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.tsegaab.besso.DoorLock&apos; to &apos;DoorLockNFC&apos;&#x0A;- Original project: &apos;Besso&apos;&#x0A;- Original element: &apos;com.tsegaab.besso.DoorLock&apos;&#x0A;- Renamed element: &apos;com.tsegaab.besso.DoorLockNFC&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;DoorLock&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.tsegaab.besso{DoorLock.java[DoorLock" matchStrategy="1" name="DoorLockNFC" qualified="false" references="true" similarDeclarations="false" stamp="1368869626672" textual="true" version="1.0"/>
+</session>

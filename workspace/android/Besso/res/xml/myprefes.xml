@@ -9,7 +9,7 @@
         android:title="Change User Name" />
     <EditTextPreference
         android:inputType="textPassword"
-        android:key="userPw"
+        android:key="email"
         android:title="Change User Password" />
 
 </PreferenceScreen>

@@ -1,7 +1,16 @@
 import web
 import my_gcm
 import constant_utilities
-import serial
+import serial, threading
+import os
+
+
+def startStream():
+    os.system("vlc-wrapper -vvv v4l2:///dev/video0 --sout '#transcode{vcodec=MJPG,vb=800,scale=1,width=480,height=320,acodec=none}:duplicate{dst=standard{access=http,mux=mpjpeg,dst=:8081/play},dst=display}'")
+    
+def stopStream():
+    os.system("killall vlc")
+    
 
 class HandleRegister:
 
@@ -12,12 +21,16 @@ class HandleRegister:
         print "\t**********************************************"
         i = web.input()
         r_id = i.r_id
+        passWd = str(i.email)
+        if passWd != constant_utilities.PASSCODE:
+            return "Login error, Password incorrect"
         print "I: Registration id = " + str(r_id)
+        print "Name = " + str(i.name)
+        print "Password = " + str(i.email)
         my_gcm.registerWithId(r_id, str(i.name), str(i.email))
-        
         constant_utilities.REG_ID = str(r_id)
         return 'Successfully registered' + r_id
-        
+                
 class HandleUnRegister:
 
     def GET(self):
@@ -27,6 +40,9 @@ class HandleUnRegister:
         print "\t**********************************************"
         i = web.input()
         r_id = i.r_id
+        passWd = str(i.email)
+        if passWd != constant_utilities.PASSCODE:
+            return "Login error, Password incorrect"
         print "I: Registration id = " + str(r_id)
         #my_gcm.unregisterWithId(r_id)
         return 
@@ -38,24 +54,13 @@ class HandleStatus:
         print "              In side HandleStatus"
         print "\t**********************************************"
         #status = s.read()
-        status = "and,then,there"
+        i = web.input()
+        passWd = str(i.email)
+        if passWd != constant_utilities.PASSCODE:
+            return "Login error, Password incorrect"
+        status = "1,0,1,1,1,1,false"
         return status
         
-class HandleSend:
-
-    def GET(self):
-        
-        print "\n\t**********************************************"
-        print "              In side HandleSend"
-        print "\t**********************************************"
-        i = web.input()
-        message = i.msg
-        r_id = 'APA91bFTUMtf6juVPopAQoNyXtRJnZ8ruIzggPlfwpXruGH-07aEMSXT2xlJAEZKbBf0JQ3Np4ZA2FooRWZbFWRFrOVXKGkAQPed5CcuD13boElwET0Y_vAIzXo9H-3jz_YZFkZQ_J_lIDU8i6gQJKfcxYjlirk0X3Iel_m9IVAE90uJQuN24ag' 
-        #r_id = i.r_id
-        print "I: Message " + str(message) + " Sent to " + str(r_id) 
-        my_gcm.sendMessage(message, id)
-        return None
-
 class HandleStream:
 
     def GET(self):
@@ -64,11 +69,16 @@ class HandleStream:
         print "              In side HandleStream"
         print "\t**********************************************"
         i = web.input()
-        message = i.msg
-        r_id = 'APA91bFTUMtf6juVPopAQoNyXtRJnZ8ruIzggPlfwpXruGH-07aEMSXT2xlJAEZKbBf0JQ3Np4ZA2FooRWZbFWRFrOVXKGkAQPed5CcuD13boElwET0Y_vAIzXo9H-3jz_YZFkZQ_J_lIDU8i6gQJKfcxYjlirk0X3Iel_m9IVAE90uJQuN24ag' 
-        #r_id = i.r_id
-        print "I: Message " + str(message) + " Sent to " + str(r_id) 
-        my_gcm.sendMessage(message, id)
+        passWd = str(i.email)
+        print passWd
+        if passWd != constant_utilities.PASSCODE:
+            return "Login error, Password incorrect"
+        code = i.code
+        if code == "1":
+            threading.Thread(target = startStream).start()
+        else:
+            threading.Thread(target = stopStream).start()            
+        
         return None
       
       
@@ -80,6 +90,10 @@ class HandleRoomLight:
         print "              In side HandleRoomLight"
         print "\t**********************************************"
         i = web.input()
+        passWd = str(i.email)
+        print passWd
+        if passWd != constant_utilities.PASSCODE:
+            return "Login error, Password incorrect"
         room_name = i.room
         set_state = i.set
         if str(i.set) == "on":
@@ -106,8 +120,72 @@ class HandleRoomLight:
                 print "outdoor off"
                 #s.write('4')
         return "I: Room " + str(room_name) + " light set to " + str(set_state)
+        
+        
+class HandleDoorLock:
+
+    def GET(self):
+        #s=serial.Serial('/dev/ttyACM0',9600)
+        print "\n\t**********************************************"
+        print "              In side HandleDoorLock"
+        print "\t**********************************************"
+        i = web.input()
+        passWd = str(i.email)
+        print passWd
+        if passWd != constant_utilities.PASSCODE:
+            return "Login error, Password incorrect"
+        door_name = i.name
+        set_state = i.set
+        if str(i.set) == "on":
+            set_state = "1"
+        elif str(i.set) == "off":
+            set_state = "0"
+        print "I: " + str(door_name) + " Door Lock set to " + str(set_state)
+        if (str(door_name)=="main_door" and str(set_state)=="1"):
+                print "Unlocking main_door"
+                #s.write('1')
+        elif (str(door_name)=="main_door" and str(set_state)=="0"):
+                print "locking main_door"
+                #s.write('0')
+        elif (str(door_name)=="bedroom_door" and str(set_state)=="1"):
+                print "Unlocking bedroom_door"
+                #s.write('3')
+        elif (str(door_name)=="bedroom_door" and str(set_state)=="0"):
+                print "Locking bed_room"
+                #s.write('2')
+        elif (str(door_name)=="kidsroom_door" and str(set_state)=="1"):
+                print "Unlocking kidsroom_door"
+                #s.write('5')
+        elif (str(door_name)=="kidsroom_door" and str(set_state)=="0"):
+                print "Locking kidsroom_door"
+                #s.write('4')
+        return "I: Door " + str(door_name) + " Door State " + str(set_state)
  
-urls = ('/register','HandleRegister', '/unregister','HandleUnRegister', '/send','HandleSend', '/room','HandleRoomLight', '/stream','HandleStream', '/door','HandleDoor', '/status','HandleStatus')
+urls = ('/register','HandleRegister', '/unregister','HandleUnRegister', '/send','HandleSend', '/room','HandleRoomLight', '/stream','HandleStream', '/door','HandleDoorLock', '/status','HandleStatus')
 app = web.application(urls, globals())
 if __name__ == "__main__":
     app.run()
+    
+    """
+        from gcm import GCM
+        
+        gcm = GCM(API_KEY)
+        data = {'param1': 'value1', 'param2': 'value2'}
+        reg_ids = ['12', '34', '69']
+        response = gcm.json_request(registration_ids=reg_ids, data=data)
+        
+        # Handling errors
+        if 'errors' in response:
+            for error, reg_ids in response['errors'].items():
+                # Check for errors and act accordingly
+                if error is 'NotRegistered':
+                    # Remove reg_ids from database
+                    for reg_id in reg_ids:
+                        entity.filter(registration_id=reg_id).delete()
+        if 'canonical' in response:
+            for reg_id, canonical_id in response['canonical'].items():
+                # Repace reg_id with canonical_id in your database
+                entry = entity.filter(registration_id=reg_id)
+                entry.registration_id = canonical_id
+                entry.save()
+    """

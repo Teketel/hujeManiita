@@ -32,10 +32,10 @@ def sendMessage(notification = "Motion is detected", reg_id = constant_utilities
             entry = entity.filter(registration_id=reg_id)
             entry.registration_id = canonical_id
             entry.save()
-    except GCMNotRegisteredException:
+    #except GCMNotRegisteredException:
         # Remove this reg_id from database
-        print "E: NotRegisteredException raised, So registration id will be deleted."
-        entity.filter(registration_id=reg_id).delete()
+        #print "E: NotRegisteredException raised, So registration id will be deleted."
+        #entity.filter(registration_id=reg_id).delete()
     except GCMUnavailableException:
         # Resent the message
         print "E: Error sending message, please Resent the message"
@@ -49,3 +49,4 @@ def get_all_reg_id():
     conn.commit()
     print 'I: Closing table connection'
     conn.close()
+sendMessage()
