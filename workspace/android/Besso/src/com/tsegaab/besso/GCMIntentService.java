@@ -106,7 +106,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         
         // Play default notification sound
-        notification.defaults |= Notification.DEFAULT_SOUND;
+        //notification.defaults |= Notification.DEFAULT_SOUND;
         
         notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "alarm.mp3");
         

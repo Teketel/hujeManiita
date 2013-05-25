@@ -6,7 +6,7 @@ import os
 
 
 def startStream():
-    os.system("vlc-wrapper -vvv v4l2:///dev/video0 --sout '#transcode{vcodec=MJPG,vb=800,scale=1,width=480,height=320,acodec=none}:duplicate{dst=standard{access=http,mux=mpjpeg,dst=:8081/play},dst=display}'")
+    os.system("vlc-wrapper -vvv v4l2:///dev/video0 --sout '#transcode{vcodec=MJPG,vb=800,scale=1,width=480,height=320,acodec=none}:duplicate{dst=standard{access=http,mux=mpjpeg,dst=:8081/play}}'")
     
 def stopStream():
     os.system("killall vlc")
@@ -165,27 +165,4 @@ urls = ('/register','HandleRegister', '/unregister','HandleUnRegister', '/send',
 app = web.application(urls, globals())
 if __name__ == "__main__":
     app.run()
-    
-    """
-        from gcm import GCM
-        
-        gcm = GCM(API_KEY)
-        data = {'param1': 'value1', 'param2': 'value2'}
-        reg_ids = ['12', '34', '69']
-        response = gcm.json_request(registration_ids=reg_ids, data=data)
-        
-        # Handling errors
-        if 'errors' in response:
-            for error, reg_ids in response['errors'].items():
-                # Check for errors and act accordingly
-                if error is 'NotRegistered':
-                    # Remove reg_ids from database
-                    for reg_id in reg_ids:
-                        entity.filter(registration_id=reg_id).delete()
-        if 'canonical' in response:
-            for reg_id, canonical_id in response['canonical'].items():
-                # Repace reg_id with canonical_id in your database
-                entry = entity.filter(registration_id=reg_id)
-                entry.registration_id = canonical_id
-                entry.save()
-    """
+

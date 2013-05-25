@@ -62,18 +62,17 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 
 		// Check if Internet present
 		if (!cd.isConnectingToInternet()) {
 			// Internet Connection is not present
-			tts.speak("Internet Error!, Please connect to a working Network.",
+			tts.speak("Connection Error!, Please connect to a working Network.",
 					TextToSpeech.QUEUE_FLUSH, null);
 			alert.showAlertDialog(MainActivity.this,
 					"Internet Connection Error!",
-					"Please connect to working Internet connection", false);
+					"Continue to offline mode.", false);
 			// stop executing code by return
-			return;
+			//return;
 		}
 		String name = userEditText.getText().toString();
 		String passWd = passwdEditText.getText().toString();

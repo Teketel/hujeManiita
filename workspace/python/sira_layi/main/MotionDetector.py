@@ -4,6 +4,8 @@ import time
 import my_gcm
 import constant_utilities
 import threading
+import os, db_model
+
 class MotionDetectorInstantaneous():
     
     def onChange(self, val): #callback when the user change the detection threshold
@@ -62,13 +64,14 @@ class MotionDetectorInstantaneous():
                         print  "I:Something is moving !"
                         print "I:Recording started. " + datetime.now().strftime("%b %d, %H:%M:%S") 
                         print "I:Notification is sent."
-                        threading.Thread(target = my_gcm.sendMessage).start()
+                        threading.Thread(target = my_gcm.sendMessageForAll).start()
                         if self.doRecord: #set isRecording=True only if we record a video
                             self.isRecording = True
             else:
                 if instant >= self.trigger_time +10: #Record during 10 seconds
                     print datetime.now().strftime("%b %d, %H:%M:%S"), "Stop recording"
                     self.isRecording = False
+                    db_model.saveVideo(path = os.path.join(os.getcwd(), datetime.now().strftime("%b-%d_%H:%M:%S")+".wmv"), date_time = datetime.now())
                 else:
                     cv.PutText(curframe,datetime.now().strftime("%b %d, %H:%M:%S"), (25,30),self.font, 0) #Put date on the frame
                     cv.WriteFrame(self.writer, curframe) #Write the frame

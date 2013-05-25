@@ -45,8 +45,40 @@ def get_all_reg_id():
     dbCursor = conn.cursor() 
     print "I: Getting "
     dbCursor.execute("SELECT regis_id FROM devices")
-    return dbCursor.fetchall()
+    reg_ids = []
+    for m_id in dbCursor.fetchall():
+        if (m_id[0]).find('APA91') >= 0:
+            reg_ids.append(m_id[0])
+    return reg_ids
     conn.commit()
     print 'I: Closing table connection'
     conn.close()
-sendMessage()
+#sendMessage()
+
+def sendMessageForAll(notification = "Motion is detected"):
+    gcm = core_gcm.GCM(constant_utilities.API_KEY) 
+    data = {"message": str(notification)}
+    reg_ids = get_all_reg_id()
+    #response = gcm.json_request(registration_id=reg_ids, data=data) 
+    if 1==1:
+        response = gcm.json_request(registration_ids = reg_ids, data=data)
+        
+        # Handling errors
+        if 'errors' in response:
+            for error, reg_ids in response['errors'].items():
+                # Check for errors and act accordingly
+                if error is 'NotRegistered':
+                    # Remove reg_ids from database
+                    for reg_id in reg_ids:
+                        entity.filter(registration_id=reg_id).delete()
+        if 'canonical' in response:
+            for reg_id, canonical_id in response['canonical'].items():
+                # Repace reg_id with canonical_id in your database
+                entry = entity.filter(registration_id=reg_id)
+                entry.registration_id = canonical_id
+                entry.save()
+    #except GCMUnavailableException:
+        # Resent the message
+    else:
+        print "E: Error sending message, please Resent the message"
+sendMessageForAll()

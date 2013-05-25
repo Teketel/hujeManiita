@@ -23,7 +23,7 @@ public class Camera extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		final String URL = "http://192.168.1.102:8081/play";
+		final String URL = "http://10.5.35.99:8081/play";
 		cd = new CheckConnection(getApplicationContext());
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

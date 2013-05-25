@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -51,9 +52,9 @@ public class DoorControl extends Activity implements
 		
 		if (!cd.isConnectingToInternet()) {
 			// Internet Connection is not present
-			noConnection.setVisibility(1);
+			noConnection.setVisibility(View.VISIBLE);
 		} else
-			noConnection.setVisibility(0);
+			noConnection.setVisibility(View.INVISIBLE);
 		
 		// get sent current status from center class
 		status = new HomeStatus(pref);
@@ -116,10 +117,10 @@ public class DoorControl extends Activity implements
 					Toast.LENGTH_LONG).show();
 			tts.speak("Internet Error!, Please connect to a working Network.",
 					TextToSpeech.QUEUE_FLUSH, null);
-			noConnection.setVisibility(1);
+			noConnection.setVisibility(View.VISIBLE);
 			return;
 		}
-		noConnection.setVisibility(0);
+		noConnection.setVisibility(View.INVISIBLE);
 		if (isSetting) {
 			return;
 		}

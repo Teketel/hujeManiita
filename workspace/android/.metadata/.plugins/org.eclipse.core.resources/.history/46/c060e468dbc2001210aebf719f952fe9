@@ -1,0 +1,233 @@
+package com.tsegaab.besso;
+
+import java.util.Locale;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Menu;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.speech.tts.TextToSpeech;
+
+public class DoorControl extends Activity implements
+		CompoundButton.OnCheckedChangeListener {
+	Switch mainDoor, bedroomDoor, kidsRoomDoor;
+	AsyncTask<Void, Void, Void> changeStateTask;
+	AsyncTask<Void, Void, Void> updateStateTask;
+	public static String Message2 = "Wait till ";
+	public static String STATUS;
+	private String[] cStatus = new String[3];
+	TextToSpeech tts;
+	CheckConnection cd;
+	private HomeStatus status;
+	private SharedPreferences pref;
+	String email;
+	boolean isSetting = false;
+	private TextView noConnection;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.door_control);
+		mainDoor = (Switch) findViewById(R.id.main_door);
+		bedroomDoor = (Switch) findViewById(R.id.bedroom_door);
+		kidsRoomDoor = (Switch) findViewById(R.id.kids_room_door);
+		noConnection = (TextView) findViewById(R.id.noConntextView2);
+		mainDoor.setOnCheckedChangeListener(this);
+		bedroomDoor.setOnCheckedChangeListener(this);
+		kidsRoomDoor.setOnCheckedChangeListener(this);
+		cd = new CheckConnection(getApplicationContext());
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		email = pref.getString("email", "passw0rd");
+		// CHECK FOR CONNECTINAND show message
+		
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			//noConnection.setVisibility(1);
+		} else
+			//noConnection.setVisibility(0);
+		
+		// get sent current status from center class
+		status = new HomeStatus(pref);
+		updateDoorsState();
+
+		tts = new TextToSpeech(DoorControl.this,
+				new TextToSpeech.OnInitListener() {
+
+					@Override
+					public void onInit(int status) {
+						if (status != TextToSpeech.ERROR) {
+							tts.setLanguage(Locale.US);
+
+						}
+
+					}
+				});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+		
+	}
+
+	private void updateDoorsState() {
+
+		isSetting = true;
+
+		cStatus = status.getStatus();
+		Log.v("Besso", "Inside updateDoorsState" + cStatus[3] + cStatus[4]
+				+ cStatus[5]);
+		if (cStatus[3].toString().equals("1"))
+			mainDoor.setChecked(true);
+		else
+			mainDoor.setChecked(false);
+		if (cStatus[4].toString().equals("1"))
+			bedroomDoor.setChecked(true);
+		else
+			bedroomDoor.setChecked(false);
+		if (cStatus[5].toString().equals("1"))
+			kidsRoomDoor.setChecked(true);
+		else
+			kidsRoomDoor.setChecked(false);
+		isSetting = false;
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		final Context context = this;
+		final String state = (isChecked ? "on" : "off");
+		// TODO Auto-generated method stub
+
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			Toast.makeText(this,
+					"Internet Error!, Please connect to a working Network.",
+					Toast.LENGTH_LONG).show();
+			tts.speak("Internet Error!, Please connect to a working Network.",
+					TextToSpeech.QUEUE_FLUSH, null);
+			//noConnection.setVisibility(1);
+			return;
+		}
+		//noConnection.setVisibility(0);
+		if (isSetting) {
+			return;
+		}
+		if (buttonView == mainDoor) {
+			tts.speak("Setting main door lock to " + state,
+					TextToSpeech.QUEUE_FLUSH, null);
+			changeStateTask = new AsyncTask<Void, Void, Void>() {
+
+				@Override
+				protected Void doInBackground(Void... params) {
+					// Register on our server
+					// On server creates a new user
+					ServerSide.doorLock(context, "main_door", state, email);
+					return null;
+				}
+
+				@Override
+				protected void onPostExecute(Void result) {
+					changeStateTask = null;
+				}
+
+			};
+			changeStateTask.execute(null, null, null);
+			Toast.makeText(this,
+					Message2 + " Setting main door lock to " + state,
+					Toast.LENGTH_LONG).show();
+			tts.speak(Message2 + " Setting main door lock to " + state,
+					TextToSpeech.QUEUE_FLUSH, null);
+		}
+		if (buttonView == bedroomDoor) {
+			tts.speak("Setting bedroom door lock to " + state,
+					TextToSpeech.QUEUE_FLUSH, null);
+			changeStateTask = new AsyncTask<Void, Void, Void>() {
+
+				@Override
+				protected Void doInBackground(Void... params) {
+					// Register on our server
+					// On server creates a new user
+					ServerSide.doorLock(getApplicationContext(),
+							"bedroom_door", state, email);
+					return null;
+				}
+
+				@Override
+				protected void onPostExecute(Void result) {
+					changeStateTask = null;
+				}
+
+			};
+			changeStateTask.execute(null, null, null);
+			Toast.makeText(this,
+					Message2 + " Setting bedroom door lock to " + state,
+					Toast.LENGTH_LONG).show();
+			tts.speak(Message2 + " Setting bedroom door lock to " + state,
+					TextToSpeech.QUEUE_FLUSH, null);
+
+		}
+		if (buttonView == kidsRoomDoor) {
+			tts.speak("Setting main door lock to " + state,
+					TextToSpeech.QUEUE_FLUSH, null);
+			changeStateTask = new AsyncTask<Void, Void, Void>() {
+
+				@Override
+				protected Void doInBackground(Void... params) {
+
+					ServerSide
+							.doorLock(context, "kids_room_door", state, email);
+					return null;
+				}
+
+				@Override
+				protected void onPostExecute(Void result) {
+					changeStateTask = null;
+				}
+
+			};
+			changeStateTask.execute(null, null, null);
+			Toast.makeText(this,
+					Message2 + " Setting kids room door lock to  " + state,
+					Toast.LENGTH_LONG).show();
+			tts.speak(Message2 + " Setting kids room door lock to  " + state,
+					TextToSpeech.QUEUE_FLUSH, null);
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (tts != null) {
+			tts.stop();
+			tts.shutdown();
+		}
+
+		if (changeStateTask != null) {
+			changeStateTask.cancel(true);
+		}
+		if (updateStateTask != null) {
+			updateStateTask.cancel(true);
+		}
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onResume() {
+		// updateLightState();
+		super.onResume();
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		email = pref.getString("email", "qwerty");
+	}
+
+}
